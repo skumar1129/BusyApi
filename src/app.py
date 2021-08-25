@@ -28,20 +28,22 @@ def create_bar_busyness():
         return jsonify({'message': 'unable to create bar busyness'}), 500
 
 
-@app.route('/live/busyness', methods=['POST'])
+@app.route('/live/barbusyness', methods=['POST'])
 @cross_origin()
 def get_live_busyness():
     try:
-        busy_service().get_live_busy(request.json)
+        busyness = busy_service().get_live_busy(request.json)
+        return jsonify({'busyness': busyness})
     except Exception as e:
         print(e)
-        return jsonify({'message': 'unable to create bar busyness'}), 500
+        return jsonify({'message': 'unable to get live data'}), 500
 
-@app.route('/average/busyness', methods=['POST'])
+@app.route('/average/barbusyness', methods=['POST'])
 @cross_origin()
 def get_average_busyness():
     try:
-        busy_service().get_average_busy(request.json)
+        busyness = busy_service().get_average_busy(request.json)
+        return jsonify({'busyness': busyness})
     except Exception as e:
         print(e)
-        return jsonify({'message': 'unable to create bar busyness'}), 500
+        return jsonify({'message': 'unable to get average busyness'}), 500

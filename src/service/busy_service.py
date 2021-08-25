@@ -46,18 +46,78 @@ class BusyService():
 
     def get_live_busy(self, body):
         location = Location.query.filter_by(location=body['location']).first()
-        if (body['neighborhood']) is not None:
+        if (body['neighborhood']):
             neighborhood = Neighborhood.query.filter_by(neighborhood=body['neighborhood'].lower()).first()
-            bar = Bar.query.filter_by(location_id=location.id, neighborhood_id=neighborhood.id, name=body['bar'].lower())
+            bar = Bar.query.filter_by(location_id=location.id, neighborhood_id=neighborhood.id, name=body['bar'].lower()).first()
         else:
-            bar = Bar.query.filter_by(location_id=location.id, name=body['bar'].lower())
+            bar = Bar.query.filter_by(location_id=location.id, name=body['bar'].lower()).first()
+        day_of_week_id = datetime.datetime.now().isoweekday()
+        hour = datetime.datetime.now().hour
+        minute = datetime.datetime.now().minute
+        if minute > 30:
+            start_hour = hour + 1
+        else:
+            start_hour = hour
+        end_hour = start_hour + 1
+        thirty_before = datetime.datetime.now() - datetime.timedelta(minutes=30)
+        thirty_after = datetime.datetime.now() + datetime.timedelta(minutes=30)
+        busyness_data = BarBusyness.query.filter_by(bar_id=bar.id).filter(BarBusyness.created_at>=thirty_before, BarBusyness.created_at<=thirty_after).all()
+        busyness_count = 0
+        busyness_score = 0
+        for data in busyness_data:
+            busyness_score += (data.busyness_id / 3)
+            if data.google_live_busyness_id:
+                busyness_score += (data.google_live_busyness_id / 3)
+            if data.google_average_busyness_id:
+                busyness_score += (data.google_average_busyness_id / 3)
+            busyness_count += 1
+        if busyness_count == 0:
+            busyness = 'Could not find'
+        else:
+            busyness = self.get_busyness(busyness_score / busyness_count)
+        return busyness
          
     
     def get_average_busy(self, body):
         location = Location.query.filter_by(location=body['location']).first()
-        if (body['neighborhood']) is not None:
+        if (body['neighborhood']):
             neighborhood = Neighborhood.query.filter_by(neighborhood=body['neighborhood'].lower()).first()
-            bar = Bar.query.filter_by(location_id=location.id, neighborhood_id=neighborhood.id, name=body['bar'].lower())
+            bar = Bar.query.filter_by(location_id=location.id, neighborhood_id=neighborhood.id, name=body['bar'].lower()).first()
         else:
-            bar = Bar.query.filter_by(location_id=location.id, name=body['bar'].lower())
+            bar = Bar.query.filter_by(location_id=location.id, name=body['bar'].lower()).first()
+        day_of_week_id = datetime.datetime.now().isoweekday()
+        hour = datetime.datetime.now().hour
+        minute = datetime.datetime.now().minute
+        if minute > 30:
+            start_hour = hour + 1
+        else:
+            start_hour = hour
+        end_hour = start_hour + 1
+        busyness_data = BarBusyness.query.filter_by(bar_id=bar.id, day_of_week_id=day_of_week_id, start_hour=start_hour, end_hour=end_hour).all()
+        busyness_count = 0
+        busyness_score = 0
+        for data in busyness_data:
+            busyness_score += (data.busyness_id / 3)
+            if data.google_live_busyness_id:
+                busyness_score += (data.google_live_busyness_id / 3)
+            if data.google_average_busyness_id:
+                busyness_score += (data.google_average_busyness_id / 3)
+            busyness_count += 1
+        if busyness_count == 0:
+            busyness = 'Could not find'
+        else:
+            busyness = self.get_busyness(busyness_score / busyness_count)
+        return busyness
+    
+    def get_busyness(self, score):
+        busyness = round(score)
+        busy_dict = {
+            1: 'Dead AF',
+            2: 'Some Crowd',
+            3: 'Lively Enough',
+            4: 'There Are Lines',
+            5: 'Can’t Move'
+        }
+        return busy_dict.get(busyness)
+        
          
