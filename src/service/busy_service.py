@@ -60,8 +60,7 @@ class BusyService():
             start_hour = hour
         end_hour = start_hour + 1
         thirty_before = datetime.datetime.now() - datetime.timedelta(minutes=30)
-        thirty_after = datetime.datetime.now() + datetime.timedelta(minutes=30)
-        busyness_data = BarBusyness.query.filter_by(bar_id=bar.id).filter(BarBusyness.created_at>=thirty_before, BarBusyness.created_at<=thirty_after).all()
+        busyness_data = BarBusyness.query.filter_by(bar_id=bar.id).filter(BarBusyness.created_at>=thirty_before).all()
         busyness_count = 0
         busyness_score = 0
         for data in busyness_data:
@@ -88,8 +87,11 @@ class BusyService():
         day_of_week_id = datetime.datetime.now().isoweekday()
         hour = datetime.datetime.now().hour
         minute = datetime.datetime.now().minute
-        if minute > 30:
+        if minute > 30 and hour != 23:
             start_hour = hour + 1
+        elif minute > 30 and hour == 23:
+            start_hour = 0
+            day_of_week_id = (day_of_week_id + 1 if day_of_week_id != 7 else 1)
         else:
             start_hour = hour
         end_hour = start_hour + 1
