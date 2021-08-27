@@ -33,7 +33,9 @@ class BusyService():
         else:
             start_hour = hour
         end_hour = start_hour + 1
-        google_live_busyness = body['google_live_busyness']   
+        google_live_busyness = None
+        if (body['google_live_busyness']):
+            google_live_busyness = body['google_live_busyness']   
         busyness = Busyness.query.filter_by(busyness=body['busyness']).first()
         busyness_id = busyness.id
         google_average_busyness = None 
