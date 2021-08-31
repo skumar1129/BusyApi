@@ -53,6 +53,8 @@ class BusyService():
             bar = Bar.query.filter_by(location_id=location.id, neighborhood_id=neighborhood.id, name=body['bar'].lower()).first()
         else:
             bar = Bar.query.filter_by(location_id=location.id, name=body['bar'].lower()).first()
+        if bar is None:
+            return 'Could Not Find Bar'
         day_of_week_id = datetime.datetime.now().isoweekday()
         hour = datetime.datetime.now().hour
         minute = datetime.datetime.now().minute
@@ -73,7 +75,7 @@ class BusyService():
                 busyness_score += (data.google_average_busyness_id / 3)
             busyness_count += 1
         if busyness_count == 0:
-            busyness = 'Could not find'
+            busyness = 'No Information For This Time'
         else:
             busyness = self.get_busyness(busyness_score / busyness_count)
         return busyness
@@ -86,6 +88,8 @@ class BusyService():
             bar = Bar.query.filter_by(location_id=location.id, neighborhood_id=neighborhood.id, name=body['bar'].lower()).first()
         else:
             bar = Bar.query.filter_by(location_id=location.id, name=body['bar'].lower()).first()
+        if bar is None:
+            return 'Could Not Find Bar'
         day_of_week_id = datetime.datetime.now().isoweekday()
         hour = datetime.datetime.now().hour
         minute = datetime.datetime.now().minute
@@ -108,7 +112,7 @@ class BusyService():
                 busyness_score += (data.google_average_busyness_id / 3)
             busyness_count += 1
         if busyness_count == 0:
-            busyness = 'Could not find'
+            busyness = 'No Information For This Time'
         else:
             busyness = self.get_busyness(busyness_score / busyness_count)
         return busyness
