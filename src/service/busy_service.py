@@ -118,7 +118,10 @@ class BusyService():
         return busyness
     
     def get_busyness(self, score):
-        busyness = round(score)
+        if score > 1:
+            busyness = round(score)
+        else:
+            busyness = 1
         busy_dict = {
             1: 'Dead AF',
             2: 'Some Crowd',
