@@ -4,18 +4,18 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS, cross_origin
 # from flask_sslify import SSLify
 import os
-# from config import Config
+from config import Config
 
 app = Flask(__name__)
-# app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+mysqlconnector://{Config.credentials['username']}:{Config.credentials['password']}@/{Config.credentials['schema']}?unix_socket=/cloudsql/{Config.credentials['connectionname']}"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:Sahil23!@localhost/app_localdb'
+app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+mysqlconnector://{Config.credentials['username']}:{Config.credentials['password']}@/{Config.credentials['schema']}?unix_socket=/cloudsql/{Config.credentials['connectionname']}"
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:Sahil23!@localhost/app_localdb'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 
 db = SQLAlchemy(app)
 cors = CORS(app)
 # sslify = SSLify(app
-from src.service.busy_service import BusyService as busy_service
+from service.busy_service import BusyService as busy_service
 
 @app.route('/barbusyness', methods=['POST'])
 @cross_origin()

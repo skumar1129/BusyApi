@@ -1,9 +1,9 @@
 from sqlalchemy import Column, DateTime, String, Integer, Boolean, ForeignKey, func
 from sqlalchemy.orm import relationship, backref
-from src.app import db
-from src.models.bar import Bar
-from src.models.busyness import Busyness
-from src.models.day_of_week import DayOfWeek
+from app import db
+from models.bar import Bar
+from models.busyness import Busyness
+from models.day_of_week import DayOfWeek
 
 class BarBusyness(db.Model):
     __tablename__ = 'barbusyness'

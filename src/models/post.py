@@ -1,13 +1,13 @@
 from sqlalchemy import Column, DateTime, String, Integer, Boolean, ForeignKey, func
 from sqlalchemy.orm import relationship, backref
-from src.app import db
+from app import db
 from uuid import uuid4
-from src.models.bar import Bar
-from src.models.location import Location
-from src.models.user import User
-from src.models.rating import Rating
-from src.models.neighborhood import Neighborhood
-from src.models.busyness import Busyness
+from models.bar import Bar
+from models.location import Location
+from models.user import User
+from models.rating import Rating
+from models.neighborhood import Neighborhood
+from models.busyness import Busyness
 
 
 class Post(db.Model):

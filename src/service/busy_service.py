@@ -1,13 +1,13 @@
 from flask import request, jsonify
 import datetime
-from src.app import db
-from src.models.barbusyness import BarBusyness
-from src.models.bar import Bar
-from src.models.location import Location
-from src.models.neighborhood import Neighborhood
-from src.models.busyness import Busyness
-from src.service.neighborhood_service import NeighborhoodService as neighborhood_service
-from src.service.bar_service import BarService as bar_service
+from app import db
+from models.barbusyness import BarBusyness
+from models.bar import Bar
+from models.location import Location
+from models.neighborhood import Neighborhood
+from models.busyness import Busyness
+from service.neighborhood_service import NeighborhoodService as neighborhood_service
+from service.bar_service import BarService as bar_service
 
 
 class BusyService():

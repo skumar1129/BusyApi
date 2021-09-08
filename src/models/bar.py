@@ -1,6 +1,6 @@
 from sqlalchemy import Column, DateTime, String, Integer, ForeignKey, func
 from sqlalchemy.orm import relationship, backref
-from src.app import db
+from app import db
 from uuid import uuid4
 
 class Bar(db.Model):

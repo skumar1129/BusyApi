@@ -1,8 +1,8 @@
 from sqlalchemy import Column, DateTime, String, Integer, Boolean, ForeignKey, func
 from sqlalchemy.orm import relationship, backref
-from src.app import db
-from src.models.user import User
-from src.models.bar import Bar
+from app import db
+from models.user import User
+from models.bar import Bar
 
 class UserBar(db.Model):
     __tablename__ = 'user_bar'

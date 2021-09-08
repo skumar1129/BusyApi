@@ -1,5 +1,5 @@
-from src.app import db
-from src.models.neighborhood import Neighborhood
+from app import db
+from models.neighborhood import Neighborhood
 from uuid import uuid4
 
 class NeighborhoodService():

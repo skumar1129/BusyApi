@@ -1,8 +1,8 @@
 from sqlalchemy import Column, DateTime, String, Integer, Boolean, ForeignKey, func
 from sqlalchemy.orm import relationship, backref
-from src.app import db
-from src.models.user import User
-from src.models.post import Post
+from app import db
+from models.user import User
+from models.post import Post
 from uuid import uuid4
 
 class Comment(db.Model):

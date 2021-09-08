@@ -1,5 +1,5 @@
-from src.app import db
-from src.models.bar import Bar
+from app import db
+from models.bar import Bar
 from uuid import uuid4
 
 class BarService():

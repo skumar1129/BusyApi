@@ -1,8 +1,8 @@
 from sqlalchemy import Column, DateTime, String, Integer, Boolean, ForeignKey, func
 from sqlalchemy.orm import relationship, backref
-from src.app import db
-from src.models.post import Post
-from src.models.user import User
+from app import db
+from models.post import Post
+from models.user import User
 
 class Likes(db.Model):
     __tablename__ = 'likes'
