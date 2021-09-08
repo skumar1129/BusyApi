@@ -68,11 +68,18 @@ class BusyService():
         busyness_count = 0
         busyness_score = 0
         for data in busyness_data:
-            busyness_score += (data.busyness_id / 3)
-            if data.google_live_busyness_id:
+            if data.google_live_busyness_id and data.google_average_busyness_id:
+                busyness_score += (data.busyness_id / 3)
                 busyness_score += (data.google_live_busyness_id / 3)
-            if data.google_average_busyness_id:
                 busyness_score += (data.google_average_busyness_id / 3)
+            elif data.google_average_busyness_id:
+                busyness_score += (data.busyness_id / 2)
+                busyness_score += (data.google_average_busyness_id / 2)
+            elif data.google_live_busyness_id:
+                busyness_score += (data.busyness_id / 2)
+                busyness_score += (data.google_live_busyness_id / 2)
+            else:
+                busyness_score += data.busyness_id
             busyness_count += 1
         if busyness_count == 0:
             busyness = 'No Information For This Time'
